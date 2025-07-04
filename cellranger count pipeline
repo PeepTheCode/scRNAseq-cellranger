@@ -1,0 +1,7 @@
+'
+Put all FASTQ files for the same biological sample (even from different runs/lanes) into one folder
+Cell Ranger will recognize all sample prefixes, merge across both runs and lanes, and output one combined result
+Cell Ranger parses the filename using this rule:
+<sample-name>_S<sample-number>_L<lane-number>_R<read-number>_001.fastq.gz
+The output will go into a new directory inside your current working directory, named after the value of the --id parameter.
+'
