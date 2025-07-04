@@ -1,0 +1,46 @@
+# Step 1: Create and activate a Conda environment (if not having already)
+conda create -n cellranger_env python=3.13 -y
+
+# Step 2: Activate the above environment
+conda activate cellranger_env
+
+# Step 3: Download Cell Ranger from 10x Genomics. Visit: https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest
+# Choose the appropriate version for your system (e.g., Linux). Example using wget:
+wget -O cellranger.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-7.2.0.tar.gz"
+
+# Step 4: Extract and set up
+tar -xzvf cellranger.tar.gz
+cd cellranger-7.2.0
+
+# Step 4: Add Cell Ranger to your PATH (only for current session)
+export PATH=$PWD:$PATH
+
+#To make it permanent for your Conda env:
+#Make PATH change permanent (optional but recommended)
+#Create a Conda environment activation script:
+mkdir -p $(conda info --base)/envs/tundup/etc/conda/activate.d
+nano $(conda info --base)/envs/tundup/etc/conda/activate.d/env_vars.sh
+
+#Add this line inside env_vars.sh:
+export PATH=/home/tundup/Softwares/cellranger-9.0.1:$PATH
+#Then save and exit (Ctrl+O, Enter, Ctrl+X in nano).
+#Now every time you conda activate my_env, Cell Ranger will be in your PATH.
+
+#Modify your shell config instead (recommended for shared HPC)
+#Edit your shell config file (e.g., .bashrc, .bash_profile, or .zshrc depending on your shell):
+nano ~/.bashrc
+
+#Add this line at the bottom:
+export PATH=/home/tundup/Softwares/cellranger-9.0.1:$PATH
+
+#Then reload it:
+source ~/.bashrc
+#This makes Cell Ranger available in every session, regardless of Conda.
+
+#Another Option: Activate Cell Ranger manually each time
+#If you prefer not to touch your shell config, just manually export the path each time after activating your Conda env:
+conda activate cellranger_env
+export PATH=/home/tundup/Softwares/cellranger-9.0.1:$PATH
+
+#This works fine but needs to be repeated every session.
+
